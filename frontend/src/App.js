@@ -14,6 +14,7 @@ import theme from './theme';
 import { AuthProvider } from './contexts/AuthContext';
 
 // Importar componentes principales
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import DashboardOperator from './pages/operator/DashboardOperator';
@@ -51,6 +52,9 @@ function App() {
                 }}
               >
                 <Routes>
+                  {/* Página de inicio - Landing Page */}
+                  <Route path="/" element={<LandingPage />} />
+                  
                   {/* Rutas públicas */}
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
@@ -75,11 +79,8 @@ function App() {
                     } 
                   />
                   
-                  {/* Redirección por defecto basada en autenticación */}
-                  <Route path="/" element={<Navigate to="/login" replace />} />
-                  
-                  {/* Ruta 404 - redirigir a login */}
-                  <Route path="*" element={<Navigate to="/login" replace />} />
+                  {/* Ruta 404 - redirigir a landing */}
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </Box>
             </Router>

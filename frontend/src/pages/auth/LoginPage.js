@@ -24,6 +24,7 @@ import {
   VisibilityOff,
   Login as LoginIcon,
   PersonAdd,
+  ArrowBack,
 } from '@mui/icons-material';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -33,22 +34,33 @@ function LoginPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated, isLoading, error, clearError } = useAuth();
+  const { login, isAuthenticated, isLoading, error, clearError, user, initialLoadComplete } = useAuth();
 
   const [formData, setFormData] = useState({
-    email: '',
+    email: location.state?.email || '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Redirigir si ya está autenticado
+  // Mensaje de éxito desde registro
+  const successMessage = location.state?.message;
+
+  // Solo redirigir si está autenticado Y la carga inicial está completa
   useEffect(() => {
-    if (isAuthenticated) {
-      const from = location.state?.from?.pathname || '/';
-      navigate(from, { replace: true });
+    if (isAuthenticated && user && initialLoadComplete) {
+      const from = location.state?.from?.pathname;
+      
+      // Si viene de una ruta protegida, ir ahí
+      if (from && from !== '/') {
+        navigate(from, { replace: true });
+      } else {
+        // Redirigir según el rol
+        const redirectPath = user.role === 'ADMIN' ? '/admin' : '/operator';
+        navigate(redirectPath, { replace: true });
+      }
     }
-  }, [isAuthenticated, navigate, location]);
+  }, [isAuthenticated, user, navigate, location.state, initialLoadComplete]);
 
   // Limpiar errores al cambiar de página
   useEffect(() => {
@@ -56,6 +68,18 @@ function LoginPage() {
       clearError();
     };
   }, [clearError]);
+
+  // Limpiar mensaje de éxito después de un tiempo
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        // Limpiar el mensaje del state
+        window.history.replaceState({}, document.title);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -75,6 +99,11 @@ function LoginPage() {
     
     if (isSubmitting || isLoading) return;
     
+    // Validación básica
+    if (!formData.email.trim() || !formData.password) {
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
@@ -82,8 +111,7 @@ function LoginPage() {
       
       if (result.success) {
         // La redirección se manejará por el useEffect
-        const redirectPath = result.user.role === 'ADMIN' ? '/admin' : '/operator';
-        navigate(redirectPath, { replace: true });
+        // No necesitamos hacer navigate aquí
       }
     } catch (error) {
       console.error('Error en login:', error);
@@ -95,6 +123,32 @@ function LoginPage() {
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleBackToHome = () => {
+    navigate('/', { replace: true });
+  };
+
+  // Mostrar loading si aún no se ha completado la carga inicial
+  if (!initialLoadComplete && isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1565C0 0%, #2E7D32 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={50} sx={{ color: 'white' }} />
+        <Typography variant="body1" sx={{ color: 'white' }}>
+          Verificando autenticación...
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -123,8 +177,26 @@ function LoginPage() {
               color: 'white',
               padding: 4,
               textAlign: 'center',
+              position: 'relative',
             }}
           >
+            {/* Botón de volver */}
+            <IconButton
+              onClick={handleBackToHome}
+              sx={{
+                position: 'absolute',
+                left: 16,
+                top: 16,
+                color: 'white',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                },
+              }}
+            >
+              <ArrowBack />
+            </IconButton>
+
             <Typography
               variant={isMobile ? 'h5' : 'h4'}
               component="h1"
@@ -144,6 +216,13 @@ function LoginPage() {
           </Box>
 
           <CardContent sx={{ padding: 4 }}>
+            {/* Mensaje de éxito desde registro */}
+            {successMessage && (
+              <Alert severity="success" sx={{ mb: 3 }}>
+                {successMessage}
+              </Alert>
+            )}
+
             {/* Mensaje de error */}
             {error && (
               <Alert severity="error" sx={{ mb: 3 }} onClose={clearError}>
@@ -162,7 +241,7 @@ function LoginPage() {
                 onChange={handleInputChange}
                 required
                 autoComplete="email"
-                autoFocus
+                autoFocus={!formData.email}
                 sx={{ mb: 2 }}
                 InputProps={{
                   startAdornment: (
@@ -208,7 +287,7 @@ function LoginPage() {
                 fullWidth
                 variant="contained"
                 size="large"
-                disabled={isSubmitting || isLoading}
+                disabled={isSubmitting || isLoading || !formData.email.trim() || !formData.password}
                 startIcon={
                   isSubmitting ? (
                     <CircularProgress size={20} color="inherit" />

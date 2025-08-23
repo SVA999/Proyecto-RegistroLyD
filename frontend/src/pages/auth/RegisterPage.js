@@ -30,6 +30,7 @@ import {
   Login as LoginIcon,
   Person,
   Badge,
+  ArrowBack,
 } from '@mui/icons-material';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -39,7 +40,7 @@ function RegisterPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
   const location = useLocation();
-  const { register, isAuthenticated, isLoading, error, clearError } = useAuth();
+  const { register, isAuthenticated, isLoading, error, clearError, user, initialLoadComplete } = useAuth();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -54,13 +55,21 @@ function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  // Redirigir si ya está autenticado
+  // Solo redirigir si está autenticado Y la carga inicial está completa
   useEffect(() => {
-    if (isAuthenticated) {
-      const from = location.state?.from?.pathname || '/';
-      navigate(from, { replace: true });
+    if (isAuthenticated && user && initialLoadComplete) {
+      const from = location.state?.from?.pathname;
+      
+      // Si viene de una ruta protegida, ir ahí
+      if (from && from !== '/') {
+        navigate(from, { replace: true });
+      } else {
+        // Redirigir según el rol
+        const redirectPath = user.role === 'ADMIN' ? '/admin' : '/operator';
+        navigate(redirectPath, { replace: true });
+      }
     }
-  }, [isAuthenticated, navigate, location]);
+  }, [isAuthenticated, user, navigate, location.state, initialLoadComplete]);
 
   // Limpiar errores al cambiar de página
   useEffect(() => {
@@ -174,6 +183,32 @@ function RegisterPage() {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const handleBackToHome = () => {
+    navigate('/', { replace: true });
+  };
+
+  // Mostrar loading si aún no se ha completado la carga inicial
+  if (!initialLoadComplete && isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1565C0 0%, #2E7D32 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 2,
+        }}
+      >
+        <CircularProgress size={50} sx={{ color: 'white' }} />
+        <Typography variant="body1" sx={{ color: 'white' }}>
+          Verificando autenticación...
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -201,8 +236,26 @@ function RegisterPage() {
               color: 'white',
               padding: 4,
               textAlign: 'center',
+              position: 'relative',
             }}
           >
+            {/* Botón de volver */}
+            <IconButton
+              onClick={handleBackToHome}
+              sx={{
+                position: 'absolute',
+                left: 16,
+                top: 16,
+                color: 'white',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                },
+              }}
+            >
+              <ArrowBack />
+            </IconButton>
+
             <Typography
               variant={isMobile ? 'h5' : 'h4'}
               component="h1"

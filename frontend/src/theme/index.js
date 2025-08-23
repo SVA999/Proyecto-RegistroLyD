@@ -140,7 +140,7 @@ const theme = createTheme({
     body2: {
       fontSize: '0.875rem', // 14px
       lineHeight: 1.5,
-      color: '#757575',
+      color: '#ffffffff',
     },
     // Botones y elementos interactivos
     button: {
