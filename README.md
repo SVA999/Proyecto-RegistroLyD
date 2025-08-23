@@ -1,13 +1,16 @@
-# React + Vite
+# 🧹 Sistema de Registro de Limpieza y Desinfección - UPB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto busca **digitalizar el proceso de registro de limpieza y desinfección** en la Universidad Pontificia Bolivariana (UPB), reemplazando el sistema manual en papel por una **aplicación web moderna**.  
 
-Currently, two official plugins are available:
+El sistema permite a los **operarios** registrar limpiezas desde cualquier dispositivo y a los **administradores** visualizar, filtrar y exportar la información en un panel centralizado.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologías
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# Proyecto-RegistroLyD
+- **Frontend**: React + Material-UI + PWA  
+- **Backend**: Node.js + Express + JWT  
+- **Base de Datos**: PostgreSQL 17.6 con Prisma ORM  
+- **Despliegue**: Docker  
+
+---
