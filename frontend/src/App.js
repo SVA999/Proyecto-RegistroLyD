@@ -7,9 +7,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 
-// Configurar dayjs en español
-dayjs.locale('es');
-
 // Importar tema personalizado
 import theme from './theme';
 
@@ -26,6 +23,9 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 // Importar componente de error global
 import ErrorBoundary from './components/common/ErrorBoundary';
 import LoadingScreen from './components/common/LoadingScreen';
+
+// Configurar dayjs en español
+dayjs.locale('es');
 
 function App() {
   return (

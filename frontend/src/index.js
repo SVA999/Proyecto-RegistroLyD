@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // Configuración de PWA (Service Worker)
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+//import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -15,6 +15,7 @@ root.render(
   </React.StrictMode>
 );
 
+/*
 // Registrar Service Worker para PWA
 // En producción se habilita automáticamente
 if (process.env.NODE_ENV === 'production') {
@@ -26,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
   } else {
     serviceWorkerRegistration.unregister();
   }
-}
+}*/
 
 // Medir performance de la aplicación
 reportWebVitals(console.log);
