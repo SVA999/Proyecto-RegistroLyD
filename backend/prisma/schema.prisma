@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(OPERATOR)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cleaningRecords CleaningRecord[]
+
+  @@map("users")
+}
+
+model Location {
+  id          Int    @id @default(autoincrement())
+  building    String
+  floor       String?
+  room        String
+  type        LocationType
+  description String?
+  active      Boolean @default(true)
+
+  cleaningRecords CleaningRecord[]
+
+  @@unique([building, floor, room], name: "building_floor_room")
+  @@map("locations")
+}
+
+model CleaningType {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  active      Boolean @default(true)
+
+  cleaningRecords CleaningRecord[]
+
+  @@map("cleaning_types")
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  brand       String?
+  type        String?
+  description String?
+  active      Boolean @default(true)
+
+  cleaningRecords CleaningRecord[]
+
+  @@map("products")
+}
+
+model CleaningRecord {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  locationId      Int
+  cleaningTypeId  Int
+  productId       Int?
+  startTime       DateTime @default(now())
+  endTime         DateTime?
+  duration        Int?     // en minutos
+  observations    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user         User         @relation(fields: [userId], references: [id])
+  location     Location     @relation(fields: [locationId], references: [id])
+  cleaningType CleaningType @relation(fields: [cleaningTypeId], references: [id])
+  product      Product?     @relation(fields: [productId], references: [id])
+
+  @@index([userId])
+  @@index([locationId])
+  @@index([createdAt])
+  @@map("cleaning_records")
+}
+
+enum Role {
+  OPERATOR
+  ADMIN
+}
+
+enum LocationType {
+  BATHROOM
+  CLASSROOM
+  OFFICE
+  HALLWAY
+  COMMON_AREA
+  OTHER
+}
