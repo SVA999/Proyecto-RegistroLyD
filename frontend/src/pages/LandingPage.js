@@ -25,6 +25,9 @@ import {
   Business,
 } from '@mui/icons-material';
 
+import Silk from '../components/common/Silk';
+//import { color } from '@mui/system';
+
 function LandingPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -56,217 +59,255 @@ function LandingPage() {
   const stats = [
     { number: '700+', label: 'Hojas/Mes Digitalizadas' },
     { number: '100%', label: 'Reducción Papel' },
-    { number: '24/7', label: 'Disponibilidad' },
-    { number: '3', label: 'Tipos de Usuarios' }
+    { number: '24/7', label: 'Disponibilidad' }
   ];
 
   return (
     <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
-      {/* Header con gradiente */}
-      <Box
-        sx={{
-          background: 'linear-gradient(135deg, #1565C0 0%, #2E7D32 100%)',
-          color: 'white',
-          py: { xs: 6, md: 8 },
-          position: 'relative',
-          overflow: 'hidden',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-            opacity: 0.1,
-          }
-        }}
+      {/* Header con Silk */}
+
+      <Silk
+        speed={5}
+        scale={0.6}
+        color={theme.palette.primary.main}
+        noiseIntensity={0.5}
+        rotation={0}
+        className="hero-silk"
       >
-        <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={8}>
-              {/* Logos institucionales */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <School sx={{ fontSize: 32, color: 'rgba(255,255,255,0.9)' }} />
-                  <Typography variant="h6" fontWeight="bold">
-                    UPB
-                  </Typography>
+        <Box 
+          sx={{
+            color: 'white',
+            py: { xs: 6, md: 8 },
+            minHeight: { xs: '70vh', md: '80vh' },
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+            zIndex: 2,
+          }}
+        >
+
+          <Container maxWidth="lg">
+            <Grid container spacing={4} alignItems="center">
+              <Grid item xs={12} md={8}>
+                {/* Logos institucionales */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <School sx={{ fontSize: 32, color: 'rgba(255,255,255,0.9)' }} />
+                    <Typography variant="h6" fontWeight="bold">
+                      UPB
+                    </Typography>
+                  </Box>
+                  <Box sx={{ width: 2, height: 24, bgcolor: 'rgba(255,255,255,0.3)' }} />
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Business sx={{ fontSize: 32, color: 'rgba(255,255,255,0.9)' }} />
+                    <Typography variant="h6" fontWeight="bold">
+                      A&S
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box sx={{ width: 2, height: 24, bgcolor: 'rgba(255,255,255,0.3)' }} />
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Business sx={{ fontSize: 32, color: 'rgba(255,255,255,0.9)' }} />
-                  <Typography variant="h6" fontWeight="bold">
-                    A&S
-                  </Typography>
-                </Box>
-              </Box>
 
-              <Typography
-                variant={isMobile ? 'h3' : 'h2'}
-                component="h1"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ 
-                  background: 'linear-gradient(45deg, #ffffff 30%, #e3f2fd 90%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  mb: 2
-                }}
-              >
-                Sistema de Registro
-              </Typography>
-
-              <Typography
-                variant={isMobile ? 'h5' : 'h4'}
-                component="h2"
-                fontWeight="500"
-                gutterBottom
-                sx={{ opacity: 0.95, mb: 3 }}
-              >
-                Limpieza y Desinfección
-              </Typography>
-
-              <Typography
-                variant={isMobile ? 'h6' : 'h6'}
-                sx={{ 
-                  opacity: 0.9, 
-                  mb: 4, 
-                  maxWidth: 600,
-                  lineHeight: 1.6 
-                }}
-              >
-                Transforma el registro físico de limpieza en un sistema digital 
-                moderno, eficiente y que cumple con todas las normativas vigentes.
-              </Typography>
-
-              {/* Botones principales */}
-              <Box 
-                sx={{ 
-                  display: 'flex', 
-                  gap: 2, 
-                  flexDirection: { xs: 'column', sm: 'row' },
-                  mb: 4 
-                }}
-              >
-                <Button
-                  component={Link}
-                  to="/login"
-                  variant="contained"
-                  size="large"
-                  startIcon={<LoginIcon />}
+                <Typography
+                  variant={isMobile ? 'h3' : 'h2'}
+                  component="h1"
+                  fontWeight="bold"
+                  gutterBottom
                   sx={{
-                    py: 1.5,
-                    px: 4,
-                    fontSize: '1.1rem',
-                    backgroundColor: 'rgba(255,255,255,0.95)',
-                    color: 'primary.contrastText',
-                    '&:hover': {
-                      backgroundColor: 'white',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
-                    },
-                    borderRadius: 2,
+                    background: 'linear-gradient(45deg, #ffffff 30%, #e3f2fd 90%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    mb: 2,
+                    textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
                   }}
                 >
-                  Iniciar Sesión
-                </Button>
+                  Sistema de Registro
+                </Typography>
 
-                <Button
-                  component={Link}
-                  to="/register"
-                  variant="outlined"
-                  size="large"
-                  startIcon={<PersonAdd />}
+                <Typography
+                  variant={isMobile ? 'h5' : 'h4'}
+                  component="h2"
+                  fontWeight="500"
+                  gutterBottom
+                  sx={{ 
+                    opacity: 0.95, 
+                    mb: 3,
+                    textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                    filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                  }}
+                >
+                  Limpieza y Desinfección
+                </Typography>
+
+                <Typography
+                  variant={isMobile ? 'h6' : 'h6'}
                   sx={{
-                    py: 1.5,
-                    px: 4,
-                    fontSize: '1.1rem',
-                    borderColor: 'rgba(255,255,255,0.5)',
-                    color: 'white',
-                    borderWidth: 2,
-                    '&:hover': {
-                      borderColor: 'white',
-                      backgroundColor: 'rgba(255,255,255,0.1)',
+                    opacity: 0.9,
+                    mb: 4,
+                    maxWidth: 600,
+                    lineHeight: 1.6,
+                    textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                    filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                  }}
+                >
+                  Transforma el registro físico de limpieza en un sistema digital
+                  moderno, eficiente y que cumple con todas las normativas vigentes.
+                </Typography>
+
+                {/* Botones principales */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    mb: 4
+                  }}
+                >
+                  <Button
+                    component={Link}
+                    to="/login"
+                    variant="contained"
+                    size="large"
+                    startIcon={<LoginIcon />}
+                    sx={{
+                      py: 1.5,
+                      px: 4,
+                      fontSize: '1.1rem',
+                      backgroundColor: 'rgba(255,255,255,0.95)',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+                      '&:hover': {
+                        backgroundColor: 'white',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
+                      },
+                      borderRadius: 2,
+                      textTransform: 'none',
+                    }}
+                  >
+                    Iniciar Sesión
+                  </Button>
+
+                  <Button
+                    component={Link}
+                    to="/register"
+                    variant="outlined"
+                    size="large"
+                    startIcon={<PersonAdd />}
+                    sx={{
+                      py: 1.5,
+                      px: 4,
+                      fontSize: '1.1rem',
+                      borderColor: 'rgba(255,255,255,0.8)',
+                      color: 'white',
                       borderWidth: 2,
-                      transform: 'translateY(-2px)',
-                    },
-                    borderRadius: 2,
+                      fontWeight: 'bold',
+                      backgroundColor: 'rgba(255,255,255,0.1)',
+                      backdropFilter: 'blur(10px)',
+                      '&:hover': {
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255,255,255,0.2)',
+                        borderWidth: 2,
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+                      },
+                      borderRadius: 2,
+                      textTransform: 'none',
+                    }}
+                  >
+                    Crear Cuenta
+                  </Button>
+                </Box>
+
+                {/* Indicadores de beneficios */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                  <CheckCircle sx={{ color: '#4CAF50', fontSize: 20 }} />
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Fácil de usar • Seguro • Cumplimiento normativo garantizado
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                {/* Estadísticas destacadas */}
+                <Paper
+                  elevation={12}
+                  sx={{
+                    p: 3,
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(15px)',
+                    borderRadius: 3,
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
                   }}
                 >
-                  Crear Cuenta
-                </Button>
-              </Box>
-
-              {/* Indicadores de beneficios */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-                <CheckCircle sx={{ color: '#4CAF50', fontSize: 20 }} />
-                <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                  Fácil de usar • Seguro • Cumplimiento normativo garantizado
-                </Typography>
-              </Box>
+                  <Typography 
+                    variant="h6" 
+                    gutterBottom 
+                    fontWeight="bold"
+                    sx={{ 
+                      color: 'white',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                      filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                    }}
+                  >
+                    Impacto del Sistema
+                  </Typography>
+                  <Grid container spacing={2}>
+                    {stats.map((stat, index) => (
+                      <Grid item xs={6} key={index}>
+                        <Box textAlign="center">
+                          <Typography
+                            variant="h4"
+                            fontWeight="bold"
+                            sx={{ 
+                              lineHeight: 1,
+                              color: 'white',
+                              textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                            }}
+                          >
+                            {stat.number}
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            sx={{ 
+                              fontSize: '0.7rem',
+                              color: 'rgba(255,255,255,0.9)',
+                              textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))'
+                            }}
+                          >
+                            {stat.label}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Paper>
+              </Grid>
             </Grid>
+          </Container>
+        </Box>
+      </Silk>
 
-            <Grid item xs={12} md={4}>
-              {/* Estadísticas destacadas */}
-              <Paper
-                elevation={8}
-                sx={{
-                  p: 3,
-                  backgroundColor: 'rgba(255,255,255,0.95)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: 3,
-                  border: '1px solid rgba(255,255,255,0.2)',
-                }}
-              >
-                <Typography variant="h6" color="primary" gutterBottom fontWeight="bold">
-                  Impacto del Sistema
-                </Typography>
-                <Grid container spacing={2}>
-                  {stats.map((stat, index) => (
-                    <Grid item xs={6} key={index}>
-                      <Box textAlign="center">
-                        <Typography 
-                          variant="h4" 
-                          fontWeight="bold" 
-                          color="primary.main"
-                          sx={{ lineHeight: 1 }}
-                        >
-                          {stat.number}
-                        </Typography>
-                        <Typography 
-                          variant="caption" 
-                          color="text.secondary"
-                          sx={{ fontSize: '0.7rem' }}
-                        >
-                          {stat.label}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
 
       {/* Sección de características */}
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <Box textAlign="center" sx={{ mb: 6 }}>
-          <Typography 
-            variant={isMobile ? 'h4' : 'h3'} 
-            component="h2" 
-            fontWeight="bold" 
-            color="primary.main" 
+          <Typography
+            variant={isMobile ? 'h4' : 'h3'}
+            component="h2"
+            fontWeight="bold"
+            color="primary.main"
             gutterBottom
           >
             Características Principales
           </Typography>
-          <Typography 
-            variant="h6" 
-            color="text.secondary" 
+          <Typography
+            variant="h6"
+            color="text.secondary"
             sx={{ maxWidth: 600, mx: 'auto' }}
           >
             Todo lo que necesitas para modernizar tu sistema de registro de limpieza
@@ -293,16 +334,16 @@ function LandingPage() {
                   <Box sx={{ mb: 2 }}>
                     {feature.icon}
                   </Box>
-                  <Typography 
-                    variant="h6" 
-                    fontWeight="bold" 
-                    gutterBottom 
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    gutterBottom
                     color="text.primary"
                   >
                     {feature.title}
                   </Typography>
-                  <Typography 
-                    variant="body2" 
+                  <Typography
+                    variant="body2"
                     color="text.secondary"
                     sx={{ lineHeight: 1.6 }}
                   >
@@ -333,29 +374,29 @@ function LandingPage() {
               border: '1px solid rgba(0,0,0,0.06)',
             }}
           >
-            <Typography 
-              variant={isMobile ? 'h5' : 'h4'} 
-              component="h2" 
-              fontWeight="bold" 
-              color="primary.main" 
+            <Typography
+              variant={isMobile ? 'h5' : 'h4'}
+              component="h2"
+              fontWeight="bold"
+              color="primary.main"
               gutterBottom
             >
               ¿Listo para comenzar?
             </Typography>
 
-            <Typography 
-              variant="body1" 
-              color="text.secondary" 
+            <Typography
+              variant="body1"
+              color="text.secondary"
               sx={{ mb: 4, maxWidth: 500, mx: 'auto', lineHeight: 1.6 }}
             >
-              Únete al sistema de registro digital más moderno y eficiente. 
+              Únete al sistema de registro digital más moderno y eficiente.
               Mejora la productividad de tu equipo hoy mismo.
             </Typography>
 
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                gap: 2, 
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
                 justifyContent: 'center',
                 flexDirection: { xs: 'column', sm: 'row' },
                 maxWidth: 400,
@@ -390,7 +431,7 @@ function LandingPage() {
                   fontSize: '1.1rem',
                   flex: 1,
                 }}
-              >
+              > 
                 Iniciar Sesión
               </Button>
             </Box>

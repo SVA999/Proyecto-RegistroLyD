@@ -34,7 +34,8 @@ function LoginPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated, isLoading, error, clearError, user, initialLoadComplete } = useAuth();
+  //const { login, isAuthenticated, isLoading, error, clearError, user, initialLoadComplete } = useAuth();
+  const { login, isAuthenticated, isLoading, error, clearError, user } = useAuth();
 
   const [formData, setFormData] = useState({
     email: location.state?.email || '',
@@ -46,9 +47,11 @@ function LoginPage() {
   // Mensaje de éxito desde registro
   const successMessage = location.state?.message;
 
-  // Solo redirigir si está autenticado Y la carga inicial está completa
+// Solo redirigir si está autenticado Y la carga inicial está completa
+  // Solo redirigir si está autenticado y no está cargando
   useEffect(() => {
-    if (isAuthenticated && user && initialLoadComplete) {
+    //if (isAuthenticated && user && initialLoadComplete) {
+    if (isAuthenticated && user && !isLoading) {
       const from = location.state?.from?.pathname;
       
       // Si viene de una ruta protegida, ir ahí
@@ -60,7 +63,8 @@ function LoginPage() {
         navigate(redirectPath, { replace: true });
       }
     }
-  }, [isAuthenticated, user, navigate, location.state, initialLoadComplete]);
+  //}, [isAuthenticated, user, navigate, location.state, initialLoadComplete]);
+  }, [isAuthenticated, user, navigate, location.state, isLoading]);
 
   // Limpiar errores al cambiar de página
   useEffect(() => {
@@ -129,7 +133,10 @@ function LoginPage() {
   };
 
   // Mostrar loading si aún no se ha completado la carga inicial
-  if (!initialLoadComplete && isLoading) {
+  //if (!initialLoadComplete && isLoading) {
+
+  // Mostrar loading si está cargando la autenticación inicial
+  if (isLoading && !isAuthenticated) {
     return (
       <Box
         sx={{
@@ -338,7 +345,10 @@ function LoginPage() {
                   Admin: admin@upb.edu.co / admin123
                 </Typography>
                 <Typography variant="caption" display="block">
-                  Operario: operario1@upb.edu.co / operator123
+                  Operario1: operario1@upb.edu.co / operator123
+                </Typography>
+                <Typography variant="caption" display="block">
+                  Operario2: operario2@upb.edu.co / operator123
                 </Typography>
               </Box>
             )}

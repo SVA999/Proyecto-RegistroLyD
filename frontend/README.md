@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# 🧹 Proyecto Registro LyD - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend del sistema **Registro LyD**, desarrollado con **React.js** y **Material-UI**, que permite gestionar el flujo de autenticación, paneles de administración y operadores para la aplicación de control de limpieza.
 
-## Available Scripts
+## 🚀 Tecnologías principales
 
-In the project directory, you can run:
+* [React 18](https://reactjs.org/)
+* [React Router v6](https://reactrouter.com/en/main)
+* [Material-UI (MUI)](https://mui.com/)
+* [Axios](https://axios-http.com/)
+* [Day.js](https://day.js.org/)
+* [Three.js](https://threejs.org/)
+* [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
+* [OGL](https://github.com/oframe/ogl)
+* [Web Vitals](https://web.dev/vitals/)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Instalación y configuración
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+# Clonar el repositorio
+git clone https://github.com/SVA999/Proyecto-RegistroLyD.git
 
-### `npm test`
+# Entrar al directorio frontend
+cd Proyecto-RegistroLyD/frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Instalar dependencias
+npm install
 
-### `npm run build`
+# Configurar variables de entorno (.env)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Iniciar en desarrollo
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📌 Notas
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Este proyecto se comunica con un **backend en Node.js + Express + PostgreSQL**.
+* Se recomienda usar **Docker Compose** para levantar la base de datos y API.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Scripts disponibles
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Inicia la aplicación en modo desarrollo en [http://localhost:3000](http://localhost:3000).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm run build
+```
 
-## Learn More
+Construye la aplicación para producción en la carpeta `build/`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm test
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Lanza el runner de pruebas en modo interactivo.
 
-### Code Splitting
+```bash
+npm run eject
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Nota:** Esta acción es irreversible. Expone la configuración de Create React App.
 
-### Analyzing the Bundle Size
+## 🔑 Variables de entorno
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+Crea un archivo `.env` basado en el ejemplo:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+cp .env.example .env
+```
 
-### Advanced Configuration
+Ejemplo de variables:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```env
+# API Configuration (Backend URL)
+REACT_APP_API_URL=http://localhost:5000
 
-### Deployment
+# Environment
+REACT_APP_ENV=development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+# App Configuration
+REACT_APP_NAME="Sistema de Registro de Limpieza UPB"
+REACT_APP_VERSION=1.0.0
 
-### `npm run build` fails to minify
+# Debug Mode (para mostrar usuarios de prueba)
+REACT_APP_DEBUG=true
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# PWA Configuration
+REACT_APP_ENABLE_SW=true
+
+# Branding
+REACT_APP_UPB_NAME="Universidad Pontificia Bolivariana"
+REACT_APP_COMPANY_NAME="A&S Servicios"
+```
+
+## 👥 Roles y funcionalidades
+
+* **Administrador**
+
+  * Acceso al dashboard de administración
+  * Gestión de usuarios y reportes
+
+* **Operador**
+
+  * Acceso al panel de control operativo
+  * Registro de actividades y consultas rápidas
+
+* **Usuarios no autenticados**
+
+  * Acceso a Login y Registro

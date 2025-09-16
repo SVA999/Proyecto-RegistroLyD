@@ -36,3 +36,88 @@
     transform: rotate(360deg);
   }
 }
+
+.gradient-blinds-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.gradient-blinds-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important; /* canvas en el medio */
+  pointer-events: none;  /* no interfiere con clicks */
+}
+
+.gradient-blinds-content {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2 !important; /* contenido encima */
+  pointer-events: auto;  /* clickeable */
+}
+
+.hero-gradient-blinds {
+  min-height: 70vh;
+}
+
+@media (min-width: 768px) {
+  .hero-gradient-blinds {
+    min-height: 80vh;
+  }
+}
+
+/* Silk component styles */
+.silk-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.silk-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.silk-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes silkFlow {
+  0% {
+    transform: translateX(-100%) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(-10px);
+  }
+  100% {
+    transform: translateX(100%) translateY(0);
+  }
+}
+
+.hero-silk {
+  min-height: 70vh;
+}
+
+@media (min-width: 768px) {
+  .hero-silk {
+    min-height: 80vh;
+  }
+}
