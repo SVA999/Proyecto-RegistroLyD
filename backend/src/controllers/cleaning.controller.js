@@ -89,7 +89,7 @@ class CleaningController {
         }
       }
 
-      const endTime = duration ? new Date(Date.now() + duration * 60000) : new Date();
+      const endTime = new Date(); // Fecha de fin automática al momento de guardar
 
       const record = await prisma.cleaningRecord.create({
         data: {
