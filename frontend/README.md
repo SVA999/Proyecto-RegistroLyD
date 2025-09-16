@@ -18,9 +18,6 @@ Frontend del sistema **Registro LyD**, desarrollado con **React.js** y **Materia
 ## 🛠️ Instalación y configuración
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/SVA999/Proyecto-RegistroLyD.git
-
 # Entrar al directorio frontend
 cd Proyecto-RegistroLyD/frontend
 
@@ -38,32 +35,18 @@ npm start
 * Este proyecto se comunica con un **backend en Node.js + Express + PostgreSQL**.
 * Se recomienda usar **Docker Compose** para levantar la base de datos y API.
 
-
 ## ⚙️ Scripts disponibles
 
 ```bash
 npm start
 ```
-
 Inicia la aplicación en modo desarrollo en [http://localhost:3000](http://localhost:3000).
+
 
 ```bash
 npm run build
 ```
-
 Construye la aplicación para producción en la carpeta `build/`.
-
-```bash
-npm test
-```
-
-Lanza el runner de pruebas en modo interactivo.
-
-```bash
-npm run eject
-```
-
-**Nota:** Esta acción es irreversible. Expone la configuración de Create React App.
 
 ## 🔑 Variables de entorno
 
@@ -97,6 +80,39 @@ REACT_APP_ENABLE_SW=true
 REACT_APP_UPB_NAME="Universidad Pontificia Bolivariana"
 REACT_APP_COMPANY_NAME="A&S Servicios"
 ```
+## 
+
+Pasos para construir y correr
+
+Genera el build de React:
+
+npm run build
+
+
+(Opcional) Si el Dockerfile usa dist/, renombra el build o ajusta el Dockerfile:
+
+mv build dist
+
+
+Construye la imagen Docker:
+
+docker build -t registro-lyd-frontend .
+
+
+Ejecuta el contenedor:
+
+docker run -d -p 80:80 --name registro-lyd-frontend registro-lyd-frontend
+
+
+Abre en el navegador:
+
+http://localhost
+
+
+Ver logs si es necesario:
+
+docker logs -f registro-lyd-frontend
+
 
 ## 👥 Roles y funcionalidades
 
