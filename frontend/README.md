@@ -79,6 +79,10 @@ REACT_APP_ENABLE_SW=true
 # Branding
 REACT_APP_UPB_NAME="Universidad Pontificia Bolivariana"
 REACT_APP_COMPANY_NAME="A&S Servicios"
+
+# n8n Webhook URL (Requerido - para enviar datos a Google Sheets)
+# Los datos se envían directamente a Google Sheets a través de este webhook
+REACT_APP_N8N_WEBHOOK_URL=https://juanjoal2513.app.n8n.cloud/webhook/registros-limpieza
 ```
 ## 
 

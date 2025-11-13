@@ -413,9 +413,9 @@ class AdminController {
   }
 
   // Exportar registros (datos básicos para CSV)
- async exportRecords(req, res, next) {
+  async exportRecords(req, res, next) {
     try {
-      const { startDate, endDate, building } = req.query;
+      const { startDate, endDate, building, userId, cleaningTypeId } = req.query;
       const where = {};
 
       // Filtros para exportación
@@ -426,6 +426,14 @@ class AdminController {
             mode: 'insensitive'
           }
         };
+      }
+
+      if (userId && !isNaN(parseInt(userId))) {
+        where.userId = parseInt(userId);
+      }
+
+      if (cleaningTypeId && !isNaN(parseInt(cleaningTypeId))) {
+        where.cleaningTypeId = parseInt(cleaningTypeId);
       }
 
       if (startDate || endDate) {
@@ -478,7 +486,7 @@ class AdminController {
           records: exportData,
           total: exportData.length,
           exportDate: new Date().toISOString(),
-          filters: { startDate, endDate, building }
+          filters: { startDate, endDate, building, userId, cleaningTypeId }
         }
       });
     } catch (error) {

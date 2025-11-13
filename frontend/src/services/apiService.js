@@ -269,9 +269,7 @@ const adminService = {
         }
       });
       
-      const response = await apiClient.get(`/admin/records/export?${queryParams.toString()}`, {
-        responseType: 'blob' // Para descargas de archivos
-      });
+      const response = await apiClient.get(`/admin/records/export?${queryParams.toString()}`);
       return response;
     } catch (error) {
       throw error;

@@ -255,26 +255,62 @@ useEffect(() => {
       const response = await apiService.admin.exportRecords(params);
       console.log('Respuesta de exportación:', response);
       
-      // El backend devuelve los datos en response.records
-      const records = response.records || response;
+      // El interceptor de axios ya extrae response.data.data, así que response ya es el objeto data
+      // El backend devuelve { records: [...], total: X, ... }
+      const records = response?.records || (Array.isArray(response) ? response : []);
       
       if (!records || records.length === 0) {
         setError('No hay datos para exportar con los filtros aplicados');
         return;
       }
       
-      // Crear y descargar CSV
+      // Generar contenido CSV para enviar a Google Sheets
       const csvContent = convertToCSV(records);
-      downloadCSV(csvContent, `registros_limpieza_${dayjs().format('YYYY-MM-DD')}.csv`);
+      const filename = `registros_limpieza_${dayjs().format('YYYY-MM-DD')}.csv`;
       
-      setSuccess(`Datos exportados exitosamente (${records.length} registros)`);
+      // Enviar datos a Google Sheets a través del webhook de n8n
+      const n8nWebhookUrl = process.env.REACT_APP_N8N_WEBHOOK_URL;
+      if (!n8nWebhookUrl) {
+        setError('Error: URL del webhook de n8n no configurada. Configure REACT_APP_N8N_WEBHOOK_URL en las variables de entorno.');
+        return;
+      }
+      
+      try {
+        const webhookResponse = await fetch(n8nWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accion: 'exportar',
+            timestamp: new Date().toISOString(),
+            registros: records.length,
+            filtros: params,
+            filename: filename,
+            usuario: user?.name || user?.email || 'Admin',
+            fechaExportacion: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            // Enviar datos completos para Google Sheets
+            datos: records, // Datos en formato JSON
+            csv: csvContent, // Datos en formato CSV
+            headers: records.length > 0 ? Object.keys(records[0]) : []
+          })
+        });
+        
+        if (!webhookResponse.ok) {
+          throw new Error(`Error del servidor: ${webhookResponse.status}`);
+        }
+        
+        console.log('Datos enviados a Google Sheets exitosamente');
+        setSuccess(`Datos exportados a Google Sheets exitosamente (${records.length} registros)`);
+      } catch (webhookError) {
+        console.error('Error al enviar datos a Google Sheets:', webhookError);
+        setError('Error al enviar datos a Google Sheets: ' + (webhookError.message || 'Error desconocido'));
+      }
     } catch (error) {
       console.error('Error exportando registros:', error);
       setError('Error exportando datos: ' + (error.message || 'Error desconocido'));
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, user]);
 
   // Función para convertir datos a CSV
   const convertToCSV = (data) => {
@@ -621,7 +657,7 @@ useEffect(() => {
             variant="contained"
             disabled={loading}
           >
-            Exportar CSV
+            Enviar a Google Sheets
           </Button>
           <Button
             startIcon={<RefreshIcon />}
